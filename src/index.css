@@ -276,9 +276,9 @@ button {
 .logo__img {
   /* Make logo visually prominent but constrained to header height */
   height: calc(var(--header-h) * 0.95);
-  max-height: 125px;
+  max-height: 160px;
   width: auto;
-  max-width: 500px;
+  max-width: 600px;
   object-fit: contain;
   transition: transform 0.3s ease;
   will-change: transform;
@@ -288,12 +288,12 @@ button {
 /* Responsive adjustments: reduce header & logo on small screens */
 @media (max-width: 900px) {
   :root {
-    --header-h: 110px;
+    --header-h: 120px;
   }
 
   .logo__img {
     height: calc(var(--header-h) * 0.9);
-    max-height: 100px;
+    max-height: 110px;
   }
 
   .nav {
@@ -303,11 +303,11 @@ button {
 
 @media (max-width: 560px) {
   :root {
-    --header-h: 90px;
+    --header-h: 85px;
   }
 
   .logo__img {
-    height: 75px;
+    height: calc(var(--header-h) * 0.9);
     max-height: 75px;
   }
 
@@ -475,7 +475,7 @@ button {
   padding: 1.5rem var(--space-md) 2rem;
   border-top: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
-  z-index: 999;
+  z-index: 1001;
   overflow: hidden;
 }
 
@@ -487,6 +487,7 @@ button {
   padding: 1rem 0;
   border-bottom: 1px solid var(--border);
   font-size: 1rem;
+  pointer-events: auto;
 }
 
 .nav--mobile .nav__cta {

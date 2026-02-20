@@ -398,7 +398,9 @@ export default function App() {
               exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }}
             >
               {[['#home', 'Home'], ['#about', 'About'], ['#oem', 'OEM'], ['#products', 'Products'], ['#clients', 'Clients']].map(([h, l]) => (
-                <a key={h} href={h} className="nav__link" onClick={() => setMenuOpen(false)}>{l}</a>
+                <a key={h} href={h} className="nav__link" onClick={() => {
+                  setTimeout(() => setMenuOpen(false), 50);
+                }}>{l}</a>
               ))}
               <a href="#contact" className="nav__cta" onClick={() => setMenuOpen(false)}>Get a Quote</a>
             </motion.nav>
