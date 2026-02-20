@@ -45,7 +45,7 @@
 
   /* ── Layout ── */
   --max-w: 1280px;
-  --header-h: 110px;
+  --header-h: 140px;
 
   /* ── Easing ── */
   --ease-exp: cubic-bezier(0.16, 1, 0.3, 1);
@@ -275,10 +275,10 @@ button {
 
 .logo__img {
   /* Make logo visually prominent but constrained to header height */
-  height: calc(var(--header-h) * 0.85);
-  max-height: 100px;
+  height: calc(var(--header-h) * 0.95);
+  max-height: 125px;
   width: auto;
-  max-width: 400px;
+  max-width: 500px;
   object-fit: contain;
   transition: transform 0.3s ease;
   will-change: transform;
@@ -288,12 +288,12 @@ button {
 /* Responsive adjustments: reduce header & logo on small screens */
 @media (max-width: 900px) {
   :root {
-    --header-h: 90px;
+    --header-h: 110px;
   }
 
   .logo__img {
-    height: calc(var(--header-h) * 0.75);
-    max-height: 70px;
+    height: calc(var(--header-h) * 0.9);
+    max-height: 100px;
   }
 
   .nav {
@@ -303,12 +303,12 @@ button {
 
 @media (max-width: 560px) {
   :root {
-    --header-h: 76px;
+    --header-h: 90px;
   }
 
   .logo__img {
-    height: 56px;
-    max-height: 56px;
+    height: 75px;
+    max-height: 75px;
   }
 
   .header__inner {
