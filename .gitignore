@@ -12,8 +12,11 @@
 !/README.md
 !/eslint.config.js
 !/src/
+!/src/**
 !/public/
+!/public/**
 !/server/
+!/server/**
 
 # Node and env
 node_modules/
