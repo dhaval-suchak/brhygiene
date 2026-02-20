@@ -4,7 +4,7 @@
  * Sends email notifications to BR Hygiene using Gmail SMTP
  */
 
-const nodemailer = require('nodemailer')
+import nodemailer from 'nodemailer'
 
 /**
  * Send email using Gmail SMTP
@@ -44,7 +44,7 @@ async function sendEmail({ to, subject, text, html }) {
   }
 }
 
-module.exports = function handler(req, res) {
+export default async function handler(req, res) {
   // Set CORS headers for all responses
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
