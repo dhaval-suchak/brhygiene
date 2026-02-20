@@ -400,20 +400,32 @@ export default function App() {
               {[['#home', 'Home'], ['#about', 'About'], ['#oem', 'OEM'], ['#products', 'Products'], ['#clients', 'Clients']].map(([h, l]) => (
                 <a key={h} href={h} className="nav__link" onClick={(e) => {
                   e.preventDefault();
-                  const target = document.querySelector(h);
-                  if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                  }
+                  document.body.style.overflow = ''; // Unlock body scroll immediately
                   setMenuOpen(false);
+                  setTimeout(() => {
+                    const target = document.querySelector(h);
+                    if (target) {
+                      const headerOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 90;
+                      const elementPosition = target.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                  }, 50);
                 }}>{l}</a>
               ))}
               <a href="#contact" className="nav__cta" onClick={(e) => {
                 e.preventDefault();
-                const target = document.querySelector('#contact');
-                if (target) {
-                  target.scrollIntoView({ behavior: 'smooth' });
-                }
+                document.body.style.overflow = ''; // Unlock body scroll immediately
                 setMenuOpen(false);
+                setTimeout(() => {
+                  const target = document.querySelector('#contact');
+                  if (target) {
+                    const headerOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 90;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                  }
+                }, 50);
               }}>Get a Quote</a>
             </motion.nav>
           )}
