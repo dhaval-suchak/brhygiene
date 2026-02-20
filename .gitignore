@@ -1,0 +1,64 @@
+# Ignore everything by default
+*
+
+# But allow these project files and folders
+!/.gitignore
+!/package.json
+!/package-lock.json
+!/yarn.lock
+!/pnpm-lock.yaml
+!/vite.config.js
+!/index.html
+!/README.md
+!/eslint.config.js
+!/src/
+!/public/
+!/server/
+
+# Node and env
+node_modules/
+dist/
+.env
+
+# IDE and system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Media and large binaries
+*.pdf
+*.zip
+*.exe
+*.mp4
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.pptx
+*.docx
+*.xlsx
+*.ttf
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
