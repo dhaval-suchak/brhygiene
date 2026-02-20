@@ -1,8 +1,10 @@
 /**
  * Vercel Serverless Function: /api/inquiries
  * Handles form submissions from the contact/inquiry form
- * Sends email notifications to BR Hygiene
+ * Sends email notifications to BR Hygiene using Gmail SMTP
  */
+
+import nodemailer from 'nodemailer'
 
 /**
  * Send email using Gmail SMTP
@@ -10,28 +12,31 @@
  */
 async function sendEmail({ to, subject, text, html }) {
   try {
-    // Use built-in node fetch to call SendGrid API or use nodemailer
-    // For now, we'll log and return success
-    // In production, integrate with SendGrid, AWS SES, or another service
-    
-    // Example using fetch to call SendGrid:
-    // const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     personalizations: [{ to: [{ email: to }] }],
-    //     from: { email: process.env.MAIL_USER },
-    //     subject,
-    //     content: [{ type: 'text/html', value: html || text }],
-    //   }),
-    // })
-    // return response.ok
+    // Check if credentials are available
+    if (!process.env.MAIL_USER || !process.env.MAIL_PASS) {
+      console.warn('⚠️  Email credentials not configured. Email not sent.')
+      return false
+    }
 
-    // For now, log the email (visible in Vercel logs)
-    console.log('📧 Email to be sent:', { to, subject, preview: text.substring(0, 100) })
+    // Create Gmail transporter
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS, // Gmail app password (not regular password)
+      },
+    })
+
+    // Send email
+    const info = await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to,
+      subject,
+      text,
+      html,
+    })
+
+    console.log('✅ Email sent:', info.messageId)
     return true
   } catch (error) {
     console.error('❌ Email send failed:', error.message)
@@ -118,15 +123,15 @@ Please respond to: ${email}
 </div>
 `
 
-    // Send email to BR Hygiene (async - don't wait for completion)
-    sendEmail({
+    // Send email to BR Hygiene
+    const brEmailSent = await sendEmail({
       to: 'brhygiene23@gmail.com',
       subject: `New ${subject} Inquiry from ${name} - ${inquiry_id}`,
       text: emailText,
       html: emailHtml,
-    }).catch(err => console.error('Email send error:', err))
+    })
 
-    // Send confirmation email to user (async)
+    // Send confirmation email to user
     const confirmationText = `
 Hello ${name},
 
@@ -165,18 +170,22 @@ Email: brhygiene23@gmail.com
 </div>
 `
 
-    sendEmail({
+    const userEmailSent = await sendEmail({
       to: email,
       subject: 'We received your inquiry - BR Hygiene',
       text: confirmationText,
       html: confirmationHtml,
-    }).catch(err => console.error('Confirmation email send error:', err))
+    })
 
-    // Return success immediately (email sends in background)
+    // Return success
     return res.status(200).json({
       success: true,
       message: 'Thank you for your inquiry! We will respond within 24 hours. Check your email for confirmation.',
       inquiry_id,
+      emails_sent: {
+        to_br_hygiene: brEmailSent,
+        to_user: userEmailSent,
+      },
     })
   } catch (error) {
     console.error('❌ Error processing inquiry:', error.message)
