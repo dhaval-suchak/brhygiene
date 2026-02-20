@@ -28,19 +28,26 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Media and large binaries
+# Media and large binaries (but allow images in public/)
 *.pdf
 *.zip
 *.exe
 *.mp4
 *.mov
-*.png
-*.jpg
-*.jpeg
 *.pptx
 *.docx
 *.xlsx
 *.ttf
+
+# Exclude images globally
+*.png
+*.jpg
+*.jpeg
+
+# Re-allow images in public/
+!/public/images/
+!/public/images/**
+
 # Logs
 logs
 *.log
