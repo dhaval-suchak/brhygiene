@@ -262,8 +262,10 @@ export default function App() {
   const { scrollYProgress } = useScroll()
   const heroParallax = useTransform(scrollYProgress, [0, 0.35], [0, -70])
 
-  // API base URL (defaults to local for dev, or use VITE_API_BASE_URL env var)
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+  // API base URL: use env var if set, or '' for relative paths on Vercel
+  // Development: set VITE_API_BASE_URL=http://localhost:5000
+  // Production (Vercel): leave unset or set to '' for relative paths (/api/xyz)
+  const API_BASE = import.meta.env.VITE_API_BASE_URL !== undefined ? import.meta.env.VITE_API_BASE_URL : (import.meta.env.DEV ? 'http://localhost:5000' : '')
 
   /* Fetch products */
   useEffect(() => {
