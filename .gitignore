@@ -17,6 +17,8 @@
 !/public/**
 !/server/
 !/server/**
+!/api/
+!/api/**
 
 # Node and env
 node_modules/

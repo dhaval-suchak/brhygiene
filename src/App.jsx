@@ -262,13 +262,16 @@ export default function App() {
   const { scrollYProgress } = useScroll()
   const heroParallax = useTransform(scrollYProgress, [0, 0.35], [0, -70])
 
+  // API base URL (defaults to local for dev, or use VITE_API_BASE_URL env var)
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+
   /* Fetch products */
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${API_BASE}/api/products`)
       .then(r => { if (!r.ok) throw new Error(); return r.json() })
       .then(d => { setProducts(d); setLoading(false) })
       .catch(() => { setProducts(FALLBACK); setLoading(false) })
-  }, [])
+  }, [API_BASE])
 
   /* Header scroll */
   useEffect(() => {
@@ -328,7 +331,7 @@ export default function App() {
     const normalized = { ...data, phone: `+91 ${phone10.slice(0, 5)} ${phone10.slice(5)}` }
     setSubmitStatus('loading')
     try {
-      const res = await fetch('http://localhost:5000/api/inquiries', {
+      const res = await fetch(`${API_BASE}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(normalized)
